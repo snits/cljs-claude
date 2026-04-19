@@ -1,0 +1,9 @@
+{
+  "name": "cljs-claude",
+  "version": "0.1.0",
+  "description": "ClojureScript bindings for the Claude Agent SDK (published to Clojars, not npm).",
+  "private": true,
+  "devDependencies": {
+    "shadow-cljs": "3.4.4"
+  }
+}

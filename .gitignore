@@ -9,3 +9,17 @@
 
 # Ephemeral session handoff (per global CLAUDE.md: do not commit)
 session-handoff.md
+
+# shadow-cljs + Clojure build artifacts
+.shadow-cljs/
+out/
+dist/
+node_modules/
+.cpcache/
+.nrepl-port
+
+# Editor / tooling
+.idea/
+*.iml
+.lsp/
+.clj-kondo/

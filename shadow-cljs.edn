@@ -1,0 +1,12 @@
+;; shadow-cljs consumes deps.edn for Clojure dependencies.
+;; CLJS/shadow-cljs itself is provided by the npm package.
+
+{:deps   true
+
+ :nrepl  {:port 7889}
+
+ :builds
+ {:test {:target    :node-test
+         :output-to "out/node-tests.js"
+         :ns-regexp "-test$"
+         :autorun   true}}}
