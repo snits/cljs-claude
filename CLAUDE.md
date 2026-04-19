@@ -2,6 +2,14 @@
 
 This file provides instructions and context for AI coding agents working on this project.
 
+## Project Scale Context
+
+- **Scope:** Solo project — Jerry + Claude. ClojureScript library, learning-focused.
+- **Tool type:** Primitives / bindings layer. Consumers are separate downstream CLJS projects (REPL playgrounds, CLI tools, multi-agent orchestrators).
+- **Codebase size:** Small and kept deliberately small. YAGNI hard — do not build abstractions before feeling their need.
+- **Process overhead:** Minimal. Pragmatic over enterprise.
+- **Default approach:** Translate-at-the-boundary (JS → CLJS data at the interop edge), immutable data, REPL-driven development. TDD per Jerry's global rules still applies.
+
 <!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:ca08a54f -->
 ## Beads Issue Tracker
 
@@ -51,18 +59,40 @@ bd close <id>         # Complete work
 
 ## Build & Test
 
-_Add your build and test commands here_
+_Pending scaffolding. `shadow-cljs.edn` + `deps.edn` land with the first code commit._
 
 ```bash
-# Example:
-# npm install
-# npm test
+# After scaffolding:
+# shadow-cljs watch <build-id>    # dev build with REPL
+# shadow-cljs release <build-id>  # release build
 ```
 
 ## Architecture Overview
 
-_Add a brief overview of your project architecture_
+ClojureScript library wrapping the TypeScript Claude Agent SDK (`@anthropic-ai/claude-agent-sdk` on npm).
+
+- **Target runtime:** Node, via `shadow-cljs`
+- **Published as:** `io.github.snits/cljs-claude` on Clojars
+- **License:** EPL-2.0 (matches Clojure ecosystem convention)
+- **Design axiom:** Translate-at-the-boundary. JS/CLJS conversion happens in dedicated interop namespaces; domain code operates on CLJS data only. No JS interop leakage into the public API.
+- **I/O discipline:** I/O-agnostic via plain function injection. Caller passes a `context` map (`{:session <atom> :send-fn <fn> ...}`); library code never opens sockets, streams, or processes directly. Pattern cribbed from `metosin/mcp-toolkit`.
+- **No protocols / records / multimethods** until there's a real polymorphism need. Plain maps and functions first.
+- **Reference architecture:** `metosin/mcp-toolkit` is the closest precedent (CLJC, promesa-based, I/O-agnostic). Treat as design template, not dependency.
+
+### Downstream consumers (separate projects, not this repo)
+
+- REPL playground
+- CLI tools
+- Multi-agent orchestrators
+
+Consumers may run under `shadow-cljs` or `nbb`. Library authoring should be **nbb-friendly where reasonable** — keep macros tractable, avoid compile-time JS interop magic that only works under the full CLJS compiler.
 
 ## Conventions & Patterns
 
-_Add your project-specific conventions here_
+- **Async model:** `promesa` for promise interop. Add `core.async` helpers for streams if/when the promesa-wrapped async iterator feels ugly. Do not build both preemptively.
+- **JS interop:** `applied-science/js-interop` for JS access; `cljs-bean` as escape hatch for performance-sensitive or large-object paths.
+- **Data shape:** Immutable CLJS maps. Namespaced keywords when they aid clarity or prevent collision; plain keywords otherwise. No records unless there's a specific reason.
+- **Schemas:** `malli` when schemas earn their keep (message shapes, coercion at the boundary). Not day one.
+- **Build tool:** `shadow-cljs`. One `shadow-cljs.edn` for the library.
+- **Testing:** TDD per Jerry's global rules. Library code should be testable without a live SDK connection — I/O-agnostic where possible.
+- **Namespace layout:** Dedicated interop namespaces (e.g., `<name>.anthropic.client`) hold the JS boundary; pure domain namespaces (e.g., `<name>.agent.core`) hold effect-free logic. Grep-ability matters — boundary code should be physically separated from domain code.
