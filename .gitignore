@@ -6,3 +6,6 @@
 .claude/
 .beads/
 .worktrees/
+
+# Ephemeral session handoff (per global CLAUDE.md: do not commit)
+session-handoff.md
