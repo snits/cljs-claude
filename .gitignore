@@ -17,6 +17,8 @@ dist/
 node_modules/
 .cpcache/
 .nrepl-port
+*.jar
+pom.xml.asc
 
 # Editor / tooling
 .idea/

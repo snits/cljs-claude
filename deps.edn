@@ -20,10 +20,13 @@
           :main-opts   ["-m" "nrepl.cmdline" "--port" "7888"]}
 
   ;; clojure -X:jar
+  ;; :sync-pom intentionally omitted: depstar 2.x syncs its own transitive
+  ;; classpath (e.g. org.clojure/clojure) into the target pom. We curate
+  ;; pom.xml by hand; depstar just assembles the jar using whatever pom.xml
+  ;; contains.
   :jar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.1.303"}}
         :exec-fn      hf.depstar/jar
-        :exec-args    {:sync-pom    true
-                       :group-id    "io.github.snits"
+        :exec-args    {:group-id    "io.github.snits"
                        :artifact-id "cljs-claude"
                        :version     "0.1.0-SNAPSHOT"
                        :jar         "cljs-claude.jar"}}
