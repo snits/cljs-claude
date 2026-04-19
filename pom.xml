@@ -4,7 +4,7 @@
   <packaging>jar</packaging>
   <groupId>io.github.snits</groupId>
   <artifactId>cljs-claude</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.0</version>
   <name>cljs-claude</name>
   <description>ClojureScript bindings for the Claude Agent SDK.</description>
   <inceptionYear>2026</inceptionYear>
@@ -18,7 +18,7 @@
     <url>https://github.com/snits/cljs-claude</url>
     <connection>scm:git:git://github.com/snits/cljs-claude.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/snits/cljs-claude.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>v0.1.0</tag>
   </scm>
   <properties>
     <maven.compiler.source>21</maven.compiler.source>

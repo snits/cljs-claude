@@ -28,7 +28,7 @@
         :exec-fn      hf.depstar/jar
         :exec-args    {:group-id    "io.github.snits"
                        :artifact-id "cljs-claude"
-                       :version     "0.1.0-SNAPSHOT"
+                       :version     "0.1.0"
                        :jar         "cljs-claude.jar"}}
 
   ;; CLOJARS_USERNAME=... CLOJARS_PASSWORD=... clojure -X:deploy
