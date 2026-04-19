@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `README.md` documenting the I/O-agnostic context-map pattern, install snippets for `deps.edn` / `shadow-cljs` / `nbb`, and the design axioms.
 - `CHANGELOG.md` (this file).
+- Error-path test coverage for `cljs-claude.client/chat`: rejection propagation, missing-`:send-fn` assertion, nil-prompt passthrough, response passthrough-unchanged.
+
+### Changed
+
+- `cljs-claude.client/chat` now asserts `:send-fn` is present on the `context` map. A missing `:send-fn` previously produced a confusing CLJS-internal `TypeError`; it now raises a clear error at the API surface.
 
 ## [0.1.0] — 2026-04-19
 

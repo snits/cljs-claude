@@ -17,4 +17,5 @@
      A promesa promise resolving to the response from :send-fn."
   [context prompt]
   (let [{:keys [send-fn]} context]
+    (assert send-fn "cljs-claude: context must contain :send-fn")
     (send-fn {:messages [{:role "user" :content prompt}]})))
